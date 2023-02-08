@@ -1,0 +1,31 @@
+//Requirements of the project : Book Management System
+
+/*
+We are a book management company
+BOOKS : ISBN(id), title, publication-date, language, num-pages, authors[], category[]
+AUTHOR : id, name, books[written by the author(s)]
+PUBLICATION : id, name, books[published by it]
+
+we have to design and code an API over this
+
+1. BOOKs
+we need an API :
+to get all books DONE,
+to get a specific books with ISBN DONE,
+category DONE,
+based on language DONE
+
+2. AUTHORS
+we need API to :
+get all the authors DONE,
+specific author by ID  DONE,
+list of authors involved in a specific book based on bookname DONE
+
+
+3. PUBLICATIONS
+we need an API :
+to get all the publication DONE,
+a specific publication based on id  DONE,
+list of publication based on a book DONE.
+
+*/

@@ -29,3 +29,14 @@ a specific publication based on id  DONE,
 list of publication based on a book DONE.
 
 */
+
+//DAY 2
+POST REQUESTS
+1 ADD NEW Book
+
+2 ADD NEW PUBLICATION
+
+3 ADD NEW AUTHOR
+
+4 DELETE A BOOK
+//make a api using if else to to check if the new data exist in the database or not if not present push else overight

@@ -1,36 +1,35 @@
-//book management project
+//-----BOOK MANAGEMENT SYSTEM -----//
 
 const express = require("express");
 var bodyParser = require("body-parser");
 
-
-//database
+//inport database
 const database = require("./database");
 //initialize express
 const booky = express(); //instance
 
-//POST REQUEST
+//for POST REQUEST
 booky.use(bodyParser.urlencoded({extended: true})); //allows express to read the body and pass it in json format
 booky.use(bodyParser.json());
 
 
-// ==================BOOKS=================
-//to get all the BOOKS
+//==================BOOKS=================
+//to GET all the BOOKS
 /*
 route : /
-descripiton get all the BOOKS
+descripiton   get/print all the BOOKS
 ACCESS    PUBLIC
 parameters  None
-methods     get
+methods     GET
 */
 booky.get("/",(req, res) => {
   return res.json({books: database.books});
 });
 
-//to get a specific books
+//to GET a specific books
 /*
- : /is/book-isbn
-descripiton get the specific BOOK
+route : /is/book-isbn
+descripiton get/print a specific BOOK
 ACCESS    PUBLIC
 parameters  book-isbn
 methods     GET
@@ -49,12 +48,11 @@ booky.get("/is/:isbn", (req, res) => {
 //to get a specific book on category
 /*
 route : /c/category-name
-descripiton   get the specific BOOK
+descripiton   get the specific category BOOK
 ACCESS    PUBLIC
 parameters  category-name
 methods     GET
 */
-
 booky.get("/c/:category", (req, res) => {
   const getSpecificBook = database.books.filter(
     (book) => book.category.includes(req.params.category)
@@ -75,7 +73,6 @@ ACCESS    PUBLIC
 parameters  language-name
 methods     GET
 */
-
 booky.get("/lang/:language", (req, res) => {
   const getSpecificBook = database.books.filter (
     (book) => book.language === req.params.language
@@ -230,6 +227,125 @@ booky.post("/publication/new", (req,res) => {
   return res.json({updatedPublication: database.publication});
 });
 
+//PUT methods
+
+//ADD new publication for a specific book
+/*
+route : /publication/update/book/
+descripiton   update/add new publications for a book
+ACCESS    PUBLIC
+parameters  isbn
+methods     put
+*/
+
+booky.put("/publication/update/book/:isbn", (req, res) => {
+  //update the publication database
+  database.publication.forEach((pub) => {
+      if(pub.id === req.body.pubId) {
+        return pub.books.push(req.params.isbn)
+      }
+  });
+  //update the books database
+  database.books.forEach((book) => {
+    if (book.ISBN === req.params.isbn) {
+      book.publication = req.body.pubId;
+      return;
+    }
+  });
+//printing the books and publication database
+  return res.json(
+    {
+      bools: database.books,
+      publications: database.publication,
+      message:"Successfully updated publication"
+    }
+  );
+});
+
+//DELETE methods
+
+//DELETE a specific book
+/*
+route : /book/delete/
+descripiton   delete a book
+ACCESS    PUBLIC
+parameters  isbn
+methods     delete
+*/
+booky.delete("/book/delete/:isbn", (req,res) => {
+  //whichever book that doesnt match witn the isbn just send it an updated databaseBookDatabase array and rest will be filtered out
+  const updatedBookDatabase = database.books.filter (
+    (book) => book.ISBN !== req.params.isbn
+  )
+  database.books = updatedBookDatabase;
+
+  return res.json({ books: database.books});
+});
+
+//DELETE a specific author from a specific book
+/*
+route : /book/delete/author/
+descripiton   delete a author
+ACCESS    PUBLIC
+parameters  isbn and authorId
+methods     delete
+*/
+
+booky.delete("/book/author/delete/:isbn/:authorId", (req, res) => {
+  //update the book database
+  database.books.forEach((book) => {
+    if(book.ISBN === req.params.isbn) {
+      const newAuthorList = book.author.filter(
+        (eachAuthor) => eachAuthor !== parseInt (req.params.authorId)
+      );
+      book.author = newAuthorList;
+      return;
+    }
+  })
+
+return res.json ({
+  book:database.books,
+  message:`"Author was deleted from the book ${req.params.isbn}"`
+});
+});
+
+
+//DELETE  a specific author from book and book form the author
+/*
+route : /book/delete/author/
+descripiton   delete a author
+ACCESS    PUBLIC
+parameters  isbn and authorId
+methods     delete
+*/
+
+booky.delete("/book/delete/author/:isbn/:authorId", (req, res) => {
+  //update the book database
+  database.books.forEach((book) => {
+    if(book.ISBN === req.params.isbn) {
+      const newAuthorList = book.author.filter(
+        (eachAuthor) => eachAuthor !== parseInt (req.params.authorId)
+      );
+      book.author = newAuthorList;
+      return;
+    }
+  })
+  //update the author database
+database.author.forEach((eachAuthor) => {
+  if(eachAuthor.id === parseInt(req.params.authorId)) {
+    const newBookList = eachAuthor.books.filter (
+      (book) => book !== req.params.isbn
+    );
+    eachAuthor.books = newBookList;
+    return;
+  }
+});
+return res.json ({
+  book:database.books,
+  author: database.author,
+  message:"Author was deleted from the database"
+});
+});
 
 // ==============Server Status=============
 booky.listen(3000, () => {

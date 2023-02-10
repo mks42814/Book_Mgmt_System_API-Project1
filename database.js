@@ -8,28 +8,18 @@ const books = [
     author:[1,2],
     publication: [1],
     category: ["tech", "space", "education"]
-  },
-  {
-    ISBN: "123456Book",
-    title:"Geeta",
-    pubDate: "2021-08-05",
-    language: "hin",
-    numPage: "990",
-    author:[2],
-    publication: [2],
-    category: ["divotional", "sanatan"]
   }
 ]
 
 const author = [
   {
     id: 1,
-    name: "Harry",
+    name: "Aradhna",
     books: ["12345Book", "secretBook"]
   },
   {
     id:2,
-    name: "Ray",
+    name: "Elon Musk",
     books: ["12345Book"]
   }
 ]
@@ -37,13 +27,13 @@ const author = [
 const publication = [
   {
     id: 1,
-    name: "Oxford",
+    name: "Writex",
     books: ["12345Book"]
   },
   {
     id: 2,
-    name: "Classmate",
-    books: ["secretBook"]
+    name: "Pentek",
+    books: []
   }
 ]
 

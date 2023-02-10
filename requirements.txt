@@ -1,5 +1,6 @@
 //Requirements of the project : Book Management System
 
+//DAY 1
 /*
 We are a book management company
 BOOKS : ISBN(id), title, publication-date, language, num-pages, authors[], category[]
@@ -31,12 +32,22 @@ list of publication based on a book DONE.
 */
 
 //DAY 2
-POST REQUESTS
+===========POST REQUESTS==========
 1 ADD NEW Book
 
 2 ADD NEW PUBLICATION
 
 3 ADD NEW AUTHOR
 
-4 DELETE A BOOK
+//DAY 3
+===========PUT REQUESTS==========
+1 Update a book if author is changed.  DONE
+
+===========DELETE REQUESTS==========
+
+1 DELETE A BOOK   DONE
 //make a api using if else to to check if the new data exist in the database or not if not present push else overight
+
+2 DELETE  AUTHOR FROM Book  =>TASK
+
+3 DELETE AUTHOR FROM BOOK AND RELATED BOOK FROM AUTHOR

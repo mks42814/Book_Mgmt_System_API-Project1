@@ -1,6 +1,9 @@
 //-----BOOK MANAGEMENT SYSTEM -----//
 
+require("dotenv").config();
+
 const express = require("express");
+const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
 //inport database
@@ -12,6 +15,8 @@ const booky = express(); //instance
 booky.use(bodyParser.urlencoded({extended: true})); //allows express to read the body and pass it in json format
 booky.use(bodyParser.json());
 
+//mongodb connection
+mongoose.connect(process.env.MONGO_URL).then(() => console.log("Connection Established with server!"));
 
 //==================BOOKS=================
 //to GET all the BOOKS
